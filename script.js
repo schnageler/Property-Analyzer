@@ -44,8 +44,6 @@ function analyzeProperties(todayProperties, yesterdayProperties) {
     const newProperties = [...todayUnitIDs].filter(id => !yesterdayUnitIDs.has(id));
     const removedProperties = [...yesterdayUnitIDs].filter(id => !todayUnitIDs.has(id));
 
-    result.new_properties_count = newProperties.length;
-    result.removed_properties_count = removedProperties.length;
     result.new_properties = newProperties;
     result.removed_properties = removedProperties;
 
@@ -56,34 +54,27 @@ function displayResult(result) {
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = ''; // Clear previous results
 
-    const table = document.createElement('table');
+    const list = document.createElement('ul');
 
-    for (const key in result) {
-        if (key === 'new_properties' || key === 'removed_properties') {
-            const rowHeader = document.createElement('tr');
-            const headerCell = document.createElement('th');
-            headerCell.textContent = key === 'new_properties' ? 'New Properties' : 'Removed Properties';
-            rowHeader.appendChild(headerCell);
-            table.appendChild(rowHeader);
+    const newPropertiesHeader = document.createElement('li');
+    newPropertiesHeader.innerHTML = `<strong>New Properties:</strong>`;
+    list.appendChild(newPropertiesHeader);
 
-            result[key].forEach(unitID => {
-                const row = document.createElement('tr');
-                const valueCell = document.createElement('td');
-                valueCell.textContent = unitID;
-                row.appendChild(valueCell);
-                table.appendChild(row);
-            });
-        } else {
-            const row = document.createElement('tr');
-            const keyCell = document.createElement('td');
-            keyCell.textContent = key;
-            row.appendChild(keyCell);
-            const valueCell = document.createElement('td');
-            valueCell.textContent = result[key];
-            row.appendChild(valueCell);
-            table.appendChild(row);
-        }
-    }
+    result.new_properties.forEach(unitID => {
+        const newItem = document.createElement('li');
+        newItem.textContent = unitID;
+        list.appendChild(newItem);
+    });
 
-    resultDiv.appendChild(table);
+    const removedPropertiesHeader = document.createElement('li');
+    removedPropertiesHeader.innerHTML = `<strong>Removed Properties:</strong>`;
+    list.appendChild(removedPropertiesHeader);
+
+    result.removed_properties.forEach(unitID => {
+        const removedItem = document.createElement('li');
+        removedItem.textContent = unitID;
+        list.appendChild(removedItem);
+    });
+
+    resultDiv.appendChild(list);
 }
