@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Property Analyzer</h1>
+    <form id="propertyForm">
+        <label for="today">Today's Properties:</label>
+        <input type="file" id="today" accept=".csv" required>
+        <label for="yesterday">Yesterday's Properties:</label>
+        <input type="file" id="yesterday" accept=".csv" required>
+        <button type="submit">Compare</button>
+    </form>
+    <div id="result"></div>
+    <script src="script.js"></script>
+</body>
+</html>
